@@ -12,7 +12,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "unreal_ini_parser"
-version = "1.0.0"
+version = "1.0.1"
 authors = [{ name = "ColdSpirit" }]
 license = { file = "LICENSE" }
 description = "Parser for Unreal Engine config files."
@@ -24,3 +24,7 @@ classifiers = [
     "License :: OSI Approved :: GNU Affero General Public License v3",
     "Operating System :: OS Independent",
 ]
+
+[project.urls]
+Homepage = "https://github.com/ColdSpirit0/unreal_ini_parser"
+Issues = "https://github.com/ColdSpirit0/unreal_ini_parser/issues"
