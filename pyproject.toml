@@ -1,0 +1,26 @@
+[tool.flake8]
+ignore = ["E402", "W503", "E127", "E126", "E303"]
+max-line-length = 120
+
+[tool.autopep8]
+ignore = ["E402", "W503", "E127", "E126", "E303"]
+max-line-length = 120
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "unreal_ini_parser"
+version = "1.0.0"
+authors = [{ name = "ColdSpirit" }]
+license = { file = "LICENSE" }
+description = "Parser for Unreal Engine config files."
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = ["pathvalidate==3.2.0"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: GNU Affero General Public License v3",
+    "Operating System :: OS Independent",
+]
