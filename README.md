@@ -14,15 +14,6 @@ pip install unreal-ini-parser
 from pathlib import Path
 from unreal_ini_parser import IniParser
 
-"""
-assume example of ini file:
-[MySection]
-IsBool = True
-Path = path/to/file
-JustArray = one
-JustArray = two
-JustArray = three
-"""
 
 def example_print(obj):
     print(type(obj).__name__, obj, sep=" | ")
@@ -32,7 +23,19 @@ def example_print(obj):
 parser = IniParser()
 
 # read ini file
-parser.read("example.ini")
+# parser.read("example.ini")
+
+# or parse string
+parser.parse("""
+[MySection]
+IsBool = True
+Path = path/to/file
+IntValue = 123
+FloatValue = 123.456
+JustArray = one
+JustArray = two
+JustArray = three
+""")
 
 # all ini data stored in sections
 example_print(parser.sections)
@@ -55,6 +58,16 @@ example_print(is_bool)
 is_bool = parser.get_value("MySection", "IsBool", bool)
 example_print(is_bool)
 # bool | True
+
+# get int value of "IntValue" key
+int_value = parser.get_value("MySection", "IntValue", int)
+example_print(int_value)
+# int | 123
+
+# get float value of "FloatValue" key
+float_value = parser.get_value("MySection", "FloatValue", float)
+example_print(float_value)
+# float | 123.456
 
 # get path value of "Path" key
 path = parser.get_value("MySection", "Path", Path)
