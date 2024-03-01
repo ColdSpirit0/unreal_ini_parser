@@ -26,7 +26,18 @@ def _convert_path(value: str, key: str) -> Path:
     return Path(value)
 
 
-# parser
+def _convert_int(value: str, key: str) -> int:
+    try:
+        return int(value)
+    except ValueError:
+        raise KeyValueException(key, value, "value is not a valid integer")
+
+
+def _convert_float(value: str, key: str) -> float:
+    try:
+        return float(value)
+    except ValueError:
+        raise KeyValueException(key, value, "value is not a valid float")
 
 
 class IniParser():
@@ -40,6 +51,8 @@ class IniParser():
         self.converters = {
             bool: _convert_bool,
             Path: _convert_path,
+            int: _convert_int,
+            float: _convert_float,
         }
 
 
@@ -52,6 +65,10 @@ class IniParser():
 
         self.paths.add(path)
         text = path.read_text()
+        self.parse(text)
+
+
+    def parse(self, text: str):
         current_section_name = None
 
         for line in text.splitlines():
@@ -88,6 +105,11 @@ class IniParser():
             # try get key and value
             if "=" in line:
                 k, v = (x.strip() for x in line.split("=", 1))
+
+                if current_section_name is None:
+                    raise SectionNotFoundException(current_section_name, 
+                                                   f"Assigning values outside of a section is not allowed: {k}={v}")
+
                 values = self.sections[current_section_name].setdefault(k, list())
                 values.append(v)
                 continue
@@ -151,8 +173,11 @@ class IniParser():
                 return default
 
         if convert_type is not str:
-            converter = self.converters[convert_type]
-            return [converter(value, key) for value in values]
+            if convert_type in self.converters:
+                converter = self.converters[convert_type]
+                return [converter(value, key) for value in values]
+            else:
+                raise TypeError(f"convert_type {convert_type} is not supported")
 
         return values
 
@@ -172,7 +197,10 @@ class IniParser():
 
         value = values[0]
         if convert_type is not str:
-            converter = self.converters[convert_type]
-            return converter(value, key)
+            if convert_type in self.converters:
+                converter = self.converters[convert_type]
+                return converter(value, key)
+            else:
+                raise TypeError(f"convert_type {convert_type} is not supported")
 
         return value

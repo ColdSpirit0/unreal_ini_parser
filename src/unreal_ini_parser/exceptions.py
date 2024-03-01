@@ -3,8 +3,8 @@ class IniParserExceptionBase(Exception):
 
 
 class SectionNotFoundException(IniParserExceptionBase):
-    def __init__(self, section: str) -> None:
-        super().__init__(f"Section {section} not found")
+    def __init__(self, section: str, message: str = "Section %s not found") -> None:
+        super().__init__(message.format(section))
 
 
 class KeyNotFoundException(IniParserExceptionBase):

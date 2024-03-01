@@ -6,6 +6,9 @@ max-line-length = 120
 ignore = ["E402", "W503", "E127", "E126", "E303"]
 max-line-length = 120
 
+[tool.pytest.ini_options]
+pythonpath = "src"
+
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
