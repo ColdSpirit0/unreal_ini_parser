@@ -15,7 +15,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "unreal_ini_parser"
-version = "1.0.1"
+version = "1.0.2"
 authors = [{ name = "ColdSpirit" }]
 license = { file = "LICENSE" }
 description = "Parser for Unreal Engine config files."
